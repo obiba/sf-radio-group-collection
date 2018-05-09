@@ -1,0 +1,23 @@
+<div class="form-group"
+     ng-controller="RadioGroupCollectionController"
+     ng-class="{'has-error': form.disableErrorState !== true && hasError(),
+                'has-success': form.disableSuccessState !== true && hasSuccess(),
+                'has-feedback': form.feedback !== false }"
+     sf-field-model
+     schema-validate="form" >
+  <!--<pre>{{form|json}}</pre>-->
+  <label ng-if="showTitle()">{{showTitle()}}</label>
+  <div>
+    <div class="row" ng-repeat="item in form.schema.items">
+      <div class="col-xs-6">
+        <span class="control-label">{{item.name}}</span>
+      </div>
+      <div class="col-xs-6">
+        <label class="radio-inline" ng-repeat="(value, caption) in form.schema.values">
+          <input type="radio" ng-model="model[key][item.key]" name="{{item.key}}" id="inlineRadio{{$index}}" value="{{value}}"> {{caption}}
+        </label>
+      </div>
+    </div>
+  </div>
+  <span class="help-block" sf-message="form.description"></span>
+</div>
