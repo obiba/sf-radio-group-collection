@@ -10,7 +10,7 @@
   <div>
     <div class="row" ng-repeat="item in form.schema.items">
       <div class="col-xs-6">
-        <span class="control-label">{{item.name}}</span>
+        <span class="control-label" ng-bind-html="item.name"></span>
       </div>
       <div class="col-xs-6">
         <label class="radio-inline" ng-repeat="(value, caption) in form.schema.values">
