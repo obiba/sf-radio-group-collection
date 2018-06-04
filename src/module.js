@@ -9,6 +9,8 @@ angular.module('sfRadioGroupCollection', [
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key = options.path;
         f.type = 'radioGroupCollection';
+        f.validationMessage = options.global.validationMessage || {};
+        f.validationMessage.allItemsSelected = f.validationMessage.allItemsSelected || 'All options must be selected.';
         options.lookup[sfPathProvider.stringify(options.path)] = f;
         return f;
       }
@@ -25,6 +27,14 @@ angular.module('sfRadioGroupCollection', [
 
   }])
   .controller('RadioGroupCollectionController', ['$scope', function ($scope) {
+
+    function validateAllItemsSelected(value) {
+      if (value && this.required === true && this.schema.items) {
+        return this.schema.items.length === Object.keys(value).length;
+      }
+      return true;
+    }
+
     $scope.$watch('ngModel.$modelValue', function () {
       if ($scope.ngModel.$validate) {
         // Make sure that allowInvalid is always true so that the model is preserved when validation fails
@@ -41,6 +51,10 @@ angular.module('sfRadioGroupCollection', [
     }, true);
 
     $scope.$watch('form', function () {
+       $scope.ngModel.$validators = {
+         allItemsSelected: validateAllItemsSelected.bind($scope.form)
+      };
+
       $scope.key = $scope.form.key[0];
       $scope.form.disableErrorState = $scope.form.hasOwnProperty('readonly') && $scope.form.readonly;
     });
