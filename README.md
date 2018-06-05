@@ -69,9 +69,25 @@ The Definition:
 }
 ```
 
-To provide the `radio-group-collection` possible values you need to provide them in the schema `values` section:
+Alternatively, you can alter the definition as below to validate that all options are selected:
+
+```
+{
+  "type": "radioGroupCollection",
+  "key": "option",
+  "required": true,
+  "validationMessage": {
+    "allItemsSelected": "You must answer all questions."
+  }
+}``` 
+
+To provide custom values you need to provide them in the schema `values` section:
 
 ```
 "values": {"yes": "Yes", "no": "No", "n/a": "N/A"}
 
 ```
+```
+"values": {"ham-en": "Ham", "ham-fr": "Jambon", "ham-es": "Jamón", "ham-it": "Prosciutto", "ham-ru": "ветчина"}
+```
+

@@ -8,7 +8,7 @@
     <script src="../bower_components/angular-schema-form-bootstrap/bootstrap-decorator.js"></script>
     <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="../dist/sf-radio-group-collection.js"></script>
-
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
 
@@ -27,7 +27,7 @@
               "type": "object",
               "format": "radioGroupCollection",
               "title": "Tell us about yourself",
-              "values": {"yes": "Yes", "no": "No", "n/a": "N/A"},
+              "values": {"ham-en": "Ham", "ham-fr": "Jambon", "ham-es": "Jamón", "ham-it": "Prosciutto", "ham-ru": "ветчина"},
               "items": [
                 {
                   "name": "Are you married?", "key": "are_you_married"
@@ -50,7 +50,10 @@
             {
               "type":"radioGroupCollection",
               "key":"option",
-              "required": true
+              "required": true,
+              "validationMessage": {
+                "allItemsSelected": "You must answer all questions."
+              }
             }
         ];
 
