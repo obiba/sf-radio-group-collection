@@ -1,7 +1,7 @@
 Schema Form Radio Group Collection Add-on
 ===================================
- 
-**sf-radio-group-collection** add-on 
+
+**sf-radio-group-collection** add-on
 
 Installation
 ------------
@@ -79,15 +79,28 @@ Alternatively, you can alter the definition as below to validate that all option
   "validationMessage": {
     "allItemsSelected": "You must answer all questions."
   }
-}``` 
+}
+```
 
-To provide custom values you need to provide them in the schema `values` section:
+To provide custom values you need to provide them in the schema "values" section:
 
 ```
 "values": {"yes": "Yes", "no": "No", "n/a": "N/A"}
-
 ```
+
+or
+
 ```
 "values": {"ham-en": "Ham", "ham-fr": "Jambon", "ham-es": "Jamón", "ham-it": "Prosciutto", "ham-ru": "ветчина"}
 ```
 
+If you would need to use checkboxes instead a definition configuration such as
+```
+{
+  "type": "radioGroupCollection",
+  "key": "option",
+  "checkboxMode": true
+}
+```
+
+would show checkboxes instead of radios. The "values" schema field would be useless in this case.

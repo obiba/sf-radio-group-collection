@@ -30,7 +30,11 @@ angular.module('sfRadioGroupCollection', [
 
     function validateAllItemsSelected(value) {
       if (value && this.required === true && this.schema.items) {
-        return this.schema.items.length === Object.keys(value).length;
+        if (this.checkboxMode) {
+          return Object.keys(value).some(function (i) { return value[i]; });
+        } else {
+          return this.schema.items.length === Object.keys(value).length;
+        }
       }
       return true;
     }
