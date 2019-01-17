@@ -13,14 +13,14 @@
       </div>
       <div class="col-xs-6">
         <label class="radio-inline" ng-repeat="(value, caption) in form.schema.values">
-          <input type="radio" ng-model="model[key][item.key]" name="{{item.key}}" id="inlineRadio{{$index}}" value="{{value}}"> {{caption}}
+          <input type="radio" ng-model="model[key][item.key]" name="{{key + '.' + item.key}}" id="inlineRadio{{$index}}" value="{{value}}"> {{caption}}
         </label>
       </div>
     </div>
 
     <div ng-if="form.checkboxMode">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="model[key][item.key]" name="{{item.key}}" id="checkbox{{$index}}" value="{{item.key}}">
+          <input type="checkbox" ng-model="model[key][item.key]" name="{{key + '.' + item.key}}" id="checkbox{{$index}}" value="{{item.key}}">
           <span ng-bind-html="item.name"></span>
         </label>
     </div>
