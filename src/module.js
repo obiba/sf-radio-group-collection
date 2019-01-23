@@ -59,6 +59,15 @@ angular.module('sfRadioGroupCollection', [
          allItemsSelected: validateAllItemsSelected.bind($scope.form)
       };
 
+      if (!Array.isArray($scope.form.schema.values)) {
+        var values = $scope.form.schema.values || {};
+        $scope.transformedValues =  Object.keys(values).map(function (valueKey) {
+          return {'key': valueKey, 'caption': values[valueKey]};
+        });
+      } else {
+        $scope.transformedValues = $scope.form.schema.values;
+      }
+
       $scope.key = $scope.form.key[0];
       $scope.form.disableErrorState = $scope.form.hasOwnProperty('readonly') && $scope.form.readonly;
     });

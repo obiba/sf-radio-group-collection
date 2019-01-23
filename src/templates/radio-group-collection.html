@@ -12,8 +12,8 @@
         <span class="control-label" ng-bind-html="item.name"></span>
       </div>
       <div class="col-xs-6">
-        <label class="radio-inline" ng-repeat="(value, caption) in form.schema.values">
-          <input type="radio" ng-model="model[key][item.key]" name="{{key + '.' + item.key}}" id="inlineRadio{{$index}}" value="{{value}}"> {{caption}}
+        <label class="radio-inline" ng-repeat="transformedValue in transformedValues">
+          <input type="radio" ng-model="model[key][item.key]" name="{{key + '.' + item.key}}" id="inlineRadio{{$index}}" value="{{transformedValue.key}}"> {{transformedValue.caption}}
         </label>
       </div>
     </div>
