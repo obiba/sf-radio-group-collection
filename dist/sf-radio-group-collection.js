@@ -1,4 +1,4 @@
-angular.module("sfRadioGroupCollectionTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/radio-group-collection.html","<div class=\"form-group\"\n     ng-controller=\"RadioGroupCollectionController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(),\n                \'has-success\': form.disableSuccessState !== true && hasSuccess(),\n                \'has-feedback\': form.feedback !== false }\"\n     sf-field-model\n     schema-validate=\"form\" >\n  <label ng-if=\"showTitle()\">{{showTitle()}}</label>\n  <div ng-repeat=\"item in form.schema.items\">\n    <div class=\"row\" ng-if=\"!form.checkboxMode\">\n      <div class=\"col-xs-6\">\n        <span class=\"control-label\" ng-bind-html=\"item.name\"></span>\n      </div>\n      <div class=\"col-xs-6\">\n        <label class=\"radio-inline\" ng-repeat=\"(value, caption) in form.schema.values\">\n          <input type=\"radio\" ng-model=\"model[key][item.key]\" name=\"{{item.key}}\" id=\"inlineRadio{{$index}}\" value=\"{{value}}\"> {{caption}}\n        </label>\n      </div>\n    </div>\n\n    <div ng-if=\"form.checkboxMode\">\n        <label class=\"checkbox-inline\">\n          <input type=\"checkbox\" ng-model=\"model[key][item.key]\" name=\"{{item.key}}\" id=\"checkbox{{$index}}\" value=\"{{item.key}}\">\n          <span ng-bind-html=\"item.name\"></span>\n        </label>\n    </div>\n  </div>\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
+angular.module("sfRadioGroupCollectionTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/radio-group-collection.html","<div class=\"form-group\"\n     ng-controller=\"RadioGroupCollectionController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(),\n                \'has-success\': form.disableSuccessState !== true && hasSuccess(),\n                \'has-feedback\': form.feedback !== false }\"\n     sf-field-model\n     schema-validate=\"form\" >\n  <label ng-if=\"showTitle()\">{{showTitle()}}</label>\n  <div ng-repeat=\"item in form.schema.items\">\n    <div class=\"row\" ng-if=\"!form.checkboxMode\">\n      <div class=\"col-xs-6\">\n        <span class=\"control-label\" ng-bind-html=\"item.name\"></span>\n      </div>\n      <div class=\"col-xs-6\">\n        <label class=\"radio-inline\" ng-repeat=\"transformedValue in transformedValues\">\n          <input type=\"radio\" ng-model=\"model[key][item.key]\" name=\"{{key + \'.\' + item.key}}\" id=\"inlineRadio{{$index}}\" value=\"{{transformedValue.key}}\"> {{transformedValue.caption}}\n        </label>\n      </div>\n    </div>\n\n    <div ng-if=\"form.checkboxMode\">\n        <label class=\"checkbox-inline\">\n          <input type=\"checkbox\" ng-model=\"model[key][item.key]\" name=\"{{key + \'.\' + item.key}}\" id=\"checkbox{{$index}}\" value=\"{{item.key}}\">\n          <span ng-bind-html=\"item.name\"></span>\n        </label>\n    </div>\n  </div>\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
 angular.module('sfRadioGroupCollection', [
   'schemaForm',
   'sfRadioGroupCollectionTemplates'
@@ -59,6 +59,15 @@ angular.module('sfRadioGroupCollection', [
        $scope.ngModel.$validators = {
          allItemsSelected: validateAllItemsSelected.bind($scope.form)
       };
+
+      if (!Array.isArray($scope.form.schema.values)) {
+        var values = $scope.form.schema.values || {};
+        $scope.transformedValues =  Object.keys(values).map(function (valueKey) {
+          return {'key': valueKey, 'caption': values[valueKey]};
+        });
+      } else {
+        $scope.transformedValues = $scope.form.schema.values;
+      }
 
       $scope.key = $scope.form.key[0];
       $scope.form.disableErrorState = $scope.form.hasOwnProperty('readonly') && $scope.form.readonly;
